@@ -1,20 +1,21 @@
-package com.capgemini.entity;
+package com.capgemini.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="godams")
-public class AMS {
+@Table(name="Address")
+public class AddressDTO {
 @Id
-private int userID;
+private int AddressID;
 private String address;
-public int getUserID() {
-	return userID;
+
+public int getAddressID() {
+	return AddressID;
 }
-public void setUserID(int userID) {
-	this.userID = userID;
+public void setAddressID(int addressID) {
+	AddressID = addressID;
 }
 public String getAddress() {
 	return address;

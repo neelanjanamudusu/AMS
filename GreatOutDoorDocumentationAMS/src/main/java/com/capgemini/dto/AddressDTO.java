@@ -5,12 +5,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Address")
+@Table(name="AMS")
 public class AddressDTO {
 @Id
+private int RetailorID;
 private int AddressID;
 private String address;
-
+public int getRetailorID() {
+	return RetailorID;
+}
+public void setRetailorID(int retailorID) {
+	RetailorID = retailorID;
+}
 public int getAddressID() {
 	return AddressID;
 }
@@ -23,4 +29,4 @@ public String getAddress() {
 public void setAddress(String address) {
 	this.address = address;
 }
- }
+}

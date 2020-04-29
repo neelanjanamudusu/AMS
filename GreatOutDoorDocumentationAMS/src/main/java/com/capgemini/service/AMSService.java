@@ -12,5 +12,5 @@ public interface AMSService {
 
 	String addAddress(AddressDTO address);
 	 List<AddressDTO> getAllRetailors();
-     Optional<AddressDTO> getRetailor(int retailorID, int addressID);
+     Optional<AddressDTO> getRetailor(int retailorID);
 }

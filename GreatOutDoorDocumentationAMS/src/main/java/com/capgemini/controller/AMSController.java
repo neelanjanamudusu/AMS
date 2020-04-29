@@ -20,12 +20,17 @@ import com.capgemini.service.AMSService;
 
 public class AMSController {
 	@Autowired
-	private AMSService s;
+	AMSService s;
 	
 	@PostMapping("/AddAddress")
-	public String addAddress(@RequestBody AddressDTO Address)
+	public String addAddress(@RequestBody AddressDTO RetailorID)
 	{
-		return s.addAddress(Address);
+		if ((s.addAddress(RetailorID))!= null)
+		{
+			return "Added Sucessfully";
+		}else 
+			return "Unsucessful";
+		//return s.addAddress(Address);
 	}
 	
 	@GetMapping("/GetAllRetailors")
@@ -35,10 +40,10 @@ public class AMSController {
 		
 	}
 	
-	@GetMapping("/GetRetailor/RetailerID/AddressID")
-	public Optional<AddressDTO> getReatilor(@PathVariable("RetailorID, AddressID") int RetailorID, int AddressID)
+	@GetMapping("/GetRetailor/RetailerID")
+	public Optional<AddressDTO> getReatilor(@PathVariable("RetailorID") int RetailorID)
 	{
-		return s.getRetailor(RetailorID, AddressID);
+		return s.getRetailor(RetailorID);
 	}
 
 }

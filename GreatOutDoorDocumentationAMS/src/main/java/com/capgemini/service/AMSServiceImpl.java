@@ -25,9 +25,8 @@ public class AMSServiceImpl implements AMSService  {
 	}
 
 	@Override
-	public Optional<AddressDTO> getRetailor(int retailorID, int addressID) {
+	public Optional<AddressDTO> getRetailor(int retailorID) {
 		// TODO Auto-generated method stub
-		return dao.getRetailor(retailorID, addressID);
+		return dao.getRetailor(retailorID);
 	}
-
 }

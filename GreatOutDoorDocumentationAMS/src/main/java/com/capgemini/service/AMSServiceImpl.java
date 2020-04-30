@@ -1,32 +1,35 @@
 package com.capgemini.service;
 
-import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 import com.capgemini.dao.AMSDao;
 import com.capgemini.dto.AddressDTO;
 
-
+@Service
 public class AMSServiceImpl implements AMSService  {
 	@Autowired 
 	private AMSDao dao;
 
 	@Override
-	public String addAddress(AddressDTO Address) {
-		return dao.save(addAddress(Address));
+	public AddressDTO addAddress(AddressDTO address) {
+		return dao.save(address);
+	}
+	
+	@Override
+	public AddressDTO updateAddress(AddressDTO address) {
+		return dao.save(address);
 	}
 
 	@Override
-	public List<AddressDTO> getAllRetailors() {
-		// TODO Auto-generated method stub
-		return dao.getAllRetailors();
+	public Integer deleteAddress(int retailorId) {
+		return dao.deleteAddress(retailorId);
 	}
 
 	@Override
-	public Optional<AddressDTO> getRetailor(int retailorID) {
-		// TODO Auto-generated method stub
-		return dao.getRetailor(retailorID);
+	public Optional<AddressDTO> getAddressById(int retailorId) {
+		return dao.findById(retailorId);
 	}
+	
 }
+

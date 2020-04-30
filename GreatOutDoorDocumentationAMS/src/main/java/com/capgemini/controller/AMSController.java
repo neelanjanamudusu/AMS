@@ -1,49 +1,76 @@
 package com.capgemini.controller;
 
-import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.capgemini.dto.AddressDTO;
+import com.capgemini.exception.IdNotFoundException;
 import com.capgemini.service.AMSService;
 
-@RestController 
+@RestController
 @RequestMapping("/AddressManagement")
-@CrossOrigin(origins="http://localhost:4900")
-
-public class AMSController {
+@CrossOrigin("http://localhost:4900")
+public class AMSController{
 	@Autowired
-	AMSService s;
+	private AMSService s;
 	
 	@PostMapping("/AddAddress")
-	public String addAddress(@RequestBody AddressDTO RetailorID)
-	{
-		if ((s.addAddress(RetailorID))!= null)
-		{
-			return "Added Sucessfully";
-		}else 
-			return "Unsucessful";
-		//return s.addAddress(Address);
-	}
-	
-	@GetMapping("/GetAllRetailors")
-	public List<AddressDTO> getAllRetailors()
-	{
-		return s.getAllRetailors();
-		
-	}
-	
-	@GetMapping("/GetRetailor/RetailerID")
-	public Optional<AddressDTO> getReatilor(@PathVariable("RetailorID") int RetailorID)
-	{
-		return s.getRetailor(RetailorID);
+	public ResponseEntity<String> AddAddress(@RequestBody AddressDTO address) {
+		AddressDTO e = s.addAddress(address);
+		if (e == null) {
+			throw new IdNotFoundException("Enter Valid Id");
+		} else {
+			return new ResponseEntity<String>("Address added successfully", new HttpHeaders(), HttpStatus.OK);
+		}
 	}
 
+	@GetMapping("/GetAddress/{retailorId}")
+	private ResponseEntity<AddressDTO> getEmployee(@PathVariable("retailorId") int retailorId) {
+		Optional<AddressDTO> e = s.getAddressById(retailorId);
+		if (e == null) {
+			throw new IdNotFoundException("Id does not exist,so we couldn't fetch details");
+		} else {
+			return new ResponseEntity<AddressDTO>(new HttpHeaders(), HttpStatus.OK);
+		}
+	}
+
+	
+	@PutMapping("/UpdateAddress")
+	public ResponseEntity<String> UpdateAddress(@RequestBody AddressDTO address) {
+		AddressDTO e = s.updateAddress(address);
+		if (e == null) {
+			throw new IdNotFoundException("Update Operation Unsuccessful,Provided Id does not exist");
+		} else {
+			return new ResponseEntity<String>("Address updated successfully", new HttpHeaders(), HttpStatus.OK);
+		}
+	}
+
+	
+	@DeleteMapping("/DeleteAddress/{retailorId}")
+	private ResponseEntity<String> deleteAddress(@PathVariable("retailorId") int retailorId) {
+		Integer e=s.deleteAddress(retailorId);
+		if (e == null) {
+			throw new IdNotFoundException("Delete Operation Unsuccessful,Provided Id does not exist");
+		} else {
+			return new ResponseEntity<String>("Address deleted successfully", new HttpHeaders(), HttpStatus.OK);
+		}
+	}
+
+	@ExceptionHandler(IdNotFoundException.class)
+	public ResponseEntity<String> userNotFound(IdNotFoundException e) {
+		return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
 }

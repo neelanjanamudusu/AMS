@@ -14,8 +14,7 @@ public interface AMSDao extends JpaRepository<AddressDTO, Integer> {
 	
 	@Transactional
 	@Modifying
-	@Query("Delete from AddressDTO add where add.retailorId=?1")
-	Integer deleteAddress( int retailorId);
-
+	@Query("Delete from AddressDTO add where add.retailerId=?1")
+	Integer deleteAddress( int retailerId);
 
 }

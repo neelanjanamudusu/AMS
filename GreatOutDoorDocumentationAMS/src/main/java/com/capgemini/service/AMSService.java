@@ -8,6 +8,6 @@ import com.capgemini.dto.AddressDTO;
 public interface AMSService {
 	AddressDTO addAddress(AddressDTO address);
 	AddressDTO updateAddress(AddressDTO address);
-	Optional<AddressDTO> getAddressById(int retailorId);
-	Integer  deleteAddress(int retailorId);
+	Optional<AddressDTO> getAddress(int retailerId);
+	Integer  deleteAddress(int retailerId);
 }

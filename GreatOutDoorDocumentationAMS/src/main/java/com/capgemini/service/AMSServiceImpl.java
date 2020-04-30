@@ -1,8 +1,10 @@
 package com.capgemini.service;
 
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.capgemini.dao.AMSDao;
 import com.capgemini.dto.AddressDTO;
 
@@ -22,13 +24,13 @@ public class AMSServiceImpl implements AMSService  {
 	}
 
 	@Override
-	public Integer deleteAddress(int retailorId) {
-		return dao.deleteAddress(retailorId);
+	public Integer deleteAddress(int retailerId) {
+		return dao.deleteAddress(retailerId);
 	}
 
 	@Override
-	public Optional<AddressDTO> getAddressById(int retailorId) {
-		return dao.findById(retailorId);
+	public Optional<AddressDTO> getAddress(int retailerId) {
+		return dao.findById(retailerId);
 	}
 	
 }

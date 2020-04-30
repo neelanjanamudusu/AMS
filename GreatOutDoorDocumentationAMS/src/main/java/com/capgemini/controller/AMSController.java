@@ -37,13 +37,15 @@ public class AMSController{
 		}
 	}
 
-	@GetMapping("/GetAddress/{retailorId}")
-	private ResponseEntity<AddressDTO> getEmployee(@PathVariable("retailorId") int retailorId) {
-		Optional<AddressDTO> e = s.getAddressById(retailorId);
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/GetAddress/{retailerId}")
+	private ResponseEntity<AddressDTO> getAddresss(@PathVariable("retailerId") int retailerId) {
+		Optional<AddressDTO> e = s.getAddress(retailerId);
+		//return e;
 		if (e == null) {
 			throw new IdNotFoundException("Id does not exist,so we couldn't fetch details");
 		} else {
-			return new ResponseEntity<AddressDTO>(new HttpHeaders(), HttpStatus.OK);
+			return new ResponseEntity(e,HttpStatus.OK);
 		}
 	}
 
@@ -59,9 +61,9 @@ public class AMSController{
 	}
 
 	
-	@DeleteMapping("/DeleteAddress/{retailorId}")
-	private ResponseEntity<String> deleteAddress(@PathVariable("retailorId") int retailorId) {
-		Integer e=s.deleteAddress(retailorId);
+	@DeleteMapping("/DeleteAddress/{retailerId}")
+	private ResponseEntity<String> deleteAddress(@PathVariable("retailerId") int retailerId) {
+		Integer e=s.deleteAddress(retailerId);
 		if (e == null) {
 			throw new IdNotFoundException("Delete Operation Unsuccessful,Provided Id does not exist");
 		} else {

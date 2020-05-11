@@ -1,12 +1,12 @@
 package com.capgemini.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.dao.AMSDao;
-import com.capgemini.dto.AddressDTO;
+import com.capgemini.entity.AMSEntity;
 
 @Service
 public class AMSServiceImpl implements AMSService  {
@@ -14,24 +14,29 @@ public class AMSServiceImpl implements AMSService  {
 	private AMSDao dao;
 
 	@Override
-	public AddressDTO addAddress(AddressDTO address) {
-		return dao.save(address);
-	}
-	
-	@Override
-	public AddressDTO updateAddress(AddressDTO address) {
-		return dao.save(address);
+	public List<AMSEntity> getAddress(int retailerId) {
+		return dao.getAddress(retailerId);
 	}
 
 	@Override
-	public Integer deleteAddress(int retailerId) {
-		return dao.deleteAddress(retailerId);
+	public AMSEntity addAddress(AMSEntity address) {
+	    return dao.save(address);
 	}
 
 	@Override
-	public Optional<AddressDTO> getAddress(int retailerId) {
-		return dao.findById(retailerId);
+	public AMSEntity updateAddress(AMSEntity address) {
+		System.out.println(address.getRetailerId());
+		System.out.println(dao.existsById(address.getRetailerId()));
+		if(dao.existsById(address.getAddressId()))
+			return dao.save(address);
+		else 
+			return null;
 	}
 	
+	@Override
+	public void deleteAddress(int addressId) {
+		dao.deleteById(addressId);
+		
+	}
 }
 

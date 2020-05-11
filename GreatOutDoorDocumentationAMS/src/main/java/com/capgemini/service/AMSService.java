@@ -1,13 +1,13 @@
 package com.capgemini.service;
 
-import java.util.Optional;
+import java.util.List;
 
-import com.capgemini.dto.AddressDTO;
+import com.capgemini.entity.AMSEntity;
 
 
 public interface AMSService {
-	AddressDTO addAddress(AddressDTO address);
-	AddressDTO updateAddress(AddressDTO address);
-	Optional<AddressDTO> getAddress(int retailerId);
-	Integer  deleteAddress(int retailerId);
+	AMSEntity updateAddress(AMSEntity address);
+	List<AMSEntity> getAddress(int retailerId);
+	void deleteAddress(int addressId);
+	AMSEntity addAddress(AMSEntity address);
 }
